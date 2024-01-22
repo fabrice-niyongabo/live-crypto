@@ -3,12 +3,14 @@ export interface IAction {
   payload: any;
 }
 
-export type TSide =
-  | "BUY"
-  | "SELL"
-  | "BUY_ESTIMATED"
-  | "SELL_ESTIMATED"
-  | "UNKNOWN";
+export interface ITrade {
+  id: number;
+  price: string;
+  qty: string;
+  quoteQty: string;
+  time: number;
+  isBuyerMaker: boolean;
+}
 
 export interface ISymbol {
   symbol: string;

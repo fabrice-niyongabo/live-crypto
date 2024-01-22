@@ -3,20 +3,43 @@ import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducers";
 import { useEffect, useState } from "react";
+import { ITrade } from "../../../interfaces";
 
-function Chart() {
+interface IProps {
+  trades: ITrade[];
+}
+function Chart({ trades }: IProps) {
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const dates = [];
+    for (let i = 0; i < trades.length; i++) {
+      const newDate = new Date(trades[i].time).toISOString();
+      const exists = dates.find((item) => item === newDate);
+      if (!exists) {
+        dates.push(newDate);
+      }
+    }
+    setCategories(dates);
+  }, [trades]);
+
   const data = {
     series: [
       {
         name: "BUY",
-        data: [17, 20, 5, 32, 4, 52, 41],
+        data: trades
+          .filter((item) => item.isBuyerMaker)
+          .map((item) => Number(item.price)),
       },
       {
         name: "SELL",
-        data: [11, 32, 45, 32, 34, 52, 41],
+        data: trades
+          .filter((item) => !item.isBuyerMaker)
+          .map((item) => Number(item.price)),
       },
     ],
     options: {
+      colors: ["#007206", "#FF0000"],
       chart: {
         height: 350,
         type: "area",
@@ -26,18 +49,19 @@ function Chart() {
       },
       stroke: {
         curve: "smooth",
+        colors: ["#007206", "#FF0000"],
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z",
-        ],
+        categories: categories,
+      },
+      yaxis: {
+        labels: {
+          show: true,
+          formatter: function (val: any) {
+            return "$" + val.toFixed(1);
+          },
+        },
       },
       tooltip: {
         x: {
@@ -47,22 +71,15 @@ function Chart() {
     },
   };
 
-  useEffect(() => {
-    const dat = [];
-    for (let i = 0; i < sortedTrades.length; i++) {
-      const exists = dat.find((item) => item === sortedTrades[i].time_exchange);
-    }
-  }, [sortedTrades]);
-
   return (
-    <>
+    <div className="text-black">
       <ReactApexChart
         options={data.options}
         series={data.series}
         type="area"
         height={350}
       />
-    </>
+    </div>
   );
 }
 
