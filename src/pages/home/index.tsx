@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { fetTrades, setTrades } from "../../redux/actions/marketData";
-import { useNavigate } from "react-router-dom";
+
+import { fetTrades } from "../../redux/actions/marketData";
 import Symbol from "./symbol";
 import Paginator from "../../components/paginator";
 import Loader from "../../components/loader";
@@ -43,8 +42,8 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {itemsToShow.map((symbol) => (
-              <Symbol symbol={symbol} key={symbol.symbol} />
+            {itemsToShow.map((symbol, index) => (
+              <Symbol symbol={symbol} key={index} />
             ))}
           </tbody>
         </table>

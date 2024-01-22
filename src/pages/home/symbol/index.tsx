@@ -22,7 +22,7 @@ function Symbol({ symbol }: IProps) {
   return (
     <tr>
       <td className="text-xs border-b border-gray-400 p-3">
-        {symbol.symbol.replace("USDT", "")}/
+        {symbol.symbol?.replace("USDT", "")}/
         <span className="text-yellow-500">USDT</span>
       </td>
 
