@@ -4,8 +4,11 @@ import { useParams } from "react-router-dom";
 import { ITrade } from "../../interfaces";
 import Chart from "./chart";
 import Market from "./market";
+import { useDispatch } from "react-redux";
+import { fetTrades } from "../../redux/actions/marketData";
 
 function Details() {
+  const dispatch = useDispatch();
   const [symboldTrades, setSymbolTrades] = useState<ITrade[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +30,7 @@ function Details() {
 
   useEffect(() => {
     fetchData();
+    dispatch(fetTrades());
   }, [symbol]);
   return (
     <div className="container md:w-[80%] mx-auto pt-5 pb-10">

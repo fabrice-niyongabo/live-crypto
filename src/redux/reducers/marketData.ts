@@ -2,6 +2,7 @@ import { IAction, ISymbol } from "../../interfaces";
 import {
   ADD_OR_UPDATE_TRADE,
   RESET_TRADES,
+  SET_IS_LOADING_TRADES,
   SET_TRADES,
   SET_TRADES_ERROR,
 } from "../actions/marketData";
@@ -9,11 +10,13 @@ import {
 interface IMarketDataReducer {
   trades: ISymbol[];
   errorMessage: string;
+  isLoading: boolean;
 }
 
 const initialState: IMarketDataReducer = {
   trades: [],
   errorMessage: "",
+  isLoading: false,
 };
 
 const marketDataReducer = (
@@ -38,6 +41,8 @@ const marketDataReducer = (
     }
     case SET_TRADES_ERROR:
       return { ...state, errorMessage: action.payload };
+    case SET_IS_LOADING_TRADES:
+      return { ...state, isLoading: action.payload };
     case RESET_TRADES:
       return initialState;
     default:

@@ -3,13 +3,16 @@ import { RootState } from "../../../redux/reducers";
 import { returnSymbolPrice } from "../../../utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
+import Loader from "../../../components/loader";
 
 function Market() {
   const navigate = useNavigate();
 
   const params = useParams();
 
-  const { trades } = useSelector((state: RootState) => state.marketDataReducer);
+  const { trades, isLoading } = useSelector(
+    (state: RootState) => state.marketDataReducer
+  );
 
   return (
     <div className="mt-1">
@@ -33,9 +36,13 @@ function Market() {
         </div>
       ))}
 
-      <Link to={"/"} className="text-sm text-blue-700">
-        View all markets
-      </Link>
+      {isLoading && trades.length === 0 ? (
+        <Loader width={50} />
+      ) : (
+        <Link to={"/"} className="text-sm text-blue-700">
+          View all markets
+        </Link>
+      )}
     </div>
   );
 }

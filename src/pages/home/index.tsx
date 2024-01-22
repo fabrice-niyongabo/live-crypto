@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { setTrades } from "../../redux/actions/marketData";
+import { fetTrades, setTrades } from "../../redux/actions/marketData";
 import { useNavigate } from "react-router-dom";
 import Symbol from "./symbol";
 import Paginator from "../../components/paginator";
@@ -10,27 +10,12 @@ import Loader from "../../components/loader";
 
 function Home() {
   const dispatch = useDispatch();
-  const { trades } = useSelector((state: RootState) => state.marketDataReducer);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const fetchData = () => {
-    setIsLoading(true);
-    axios
-      .get("https://testnet.binancefuture.com/fapi/v1/exchangeInfo")
-      .then((res) => {
-        setIsLoading(false);
-        if (res.data.symbols) {
-          dispatch(setTrades(res.data.symbols));
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log({ error });
-      });
-  };
+  const { trades, isLoading } = useSelector(
+    (state: RootState) => state.marketDataReducer
+  );
 
   useEffect(() => {
-    fetchData();
+    dispatch(fetTrades());
   }, []);
 
   //pagination
@@ -63,7 +48,7 @@ function Home() {
             ))}
           </tbody>
         </table>
-        {isLoading && <Loader width={80} />}
+        {isLoading && trades.length === 0 && <Loader width={80} />}
         <div className="mt-5">
           <Paginator
             itemsPerPage={itemsPerPage}
