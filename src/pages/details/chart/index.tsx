@@ -1,17 +1,33 @@
 //@ts-nocheck
 import ReactApexChart from "react-apexcharts";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducers";
 
 function Chart() {
+  const { trades } = useSelector((state: RootState) => state.marketDataReducer);
   const data = {
     series: [
       {
-        name: "series1",
+        name: "BUY",
         data: [31, 40, 28, 51, 42, 109, 100],
       },
       {
-        name: "series2",
+        name: "SELL",
         data: [11, 32, 45, 32, 34, 52, 41],
       },
+
+      //   {
+      //     name: "BUY",
+      //     data: trades
+      //       .filter((trade) => trade.taker_side === "BUY")
+      //       .map((item) => item.price),
+      //   },
+      //   {
+      //     name: "SELL",
+      //     data: trades
+      //       .filter((trade) => trade.taker_side === "SELL")
+      //       .map((item) => item.price),
+      //   },
     ],
     options: {
       chart: {
