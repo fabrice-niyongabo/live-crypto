@@ -5,7 +5,7 @@ import axios from "axios";
 import { setTrades } from "../../redux/actions/marketData";
 import { useNavigate } from "react-router-dom";
 
-function Home() {
+function Details() {
   const dispatch = useDispatch();
   const { trades } = useSelector((state: RootState) => state.marketDataReducer);
   const [isLoading, setIsLoading] = useState(false);
@@ -79,4 +79,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Details;
