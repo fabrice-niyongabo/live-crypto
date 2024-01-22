@@ -4,6 +4,7 @@
   align-items: flex-start;
   margin-top: 10px;
   font-size: 12px;
+  user-select: none;
 }
 
 .pagination-main-container select {
