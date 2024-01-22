@@ -6,6 +6,7 @@ import { setTrades } from "../../redux/actions/marketData";
 import { useNavigate } from "react-router-dom";
 import Symbol from "./symbol";
 import Paginator from "../../components/paginator";
+import Loader from "../../components/loader";
 
 function Home() {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ function Home() {
             ))}
           </tbody>
         </table>
+        {isLoading && <Loader width={80} />}
         <div className="mt-5">
           <Paginator
             itemsPerPage={itemsPerPage}
