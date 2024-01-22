@@ -5,6 +5,7 @@ import axios from "axios";
 import { setTrades } from "../../redux/actions/marketData";
 import { useNavigate } from "react-router-dom";
 import Symbol from "./symbol";
+import Paginator from "../../components/paginator";
 
 function Home() {
   const dispatch = useDispatch();
@@ -30,6 +31,17 @@ function Home() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  //pagination
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const endOffset = itemOffset + itemsPerPage;
+  const itemsToShow = trades.slice(
+    itemOffset > trades.length ? 0 : itemOffset,
+    endOffset
+  );
+  const pageCount = Math.ceil(trades.length / itemsPerPage);
   return (
     <div className="container md:w-[80%] mx-auto pt-5 pb-10 bg-gray-900 p-5 rounded-md text-white">
       <div style={{ width: "100%", overflowX: "auto" }}>
@@ -45,11 +57,20 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {trades.map((symbol) => (
+            {itemsToShow.map((symbol) => (
               <Symbol symbol={symbol} key={symbol.symbol} />
             ))}
           </tbody>
         </table>
+        <div className="mt-5">
+          <Paginator
+            itemsPerPage={itemsPerPage}
+            pageCount={pageCount}
+            setItemOffset={setItemOffset}
+            setItemsPerPage={setItemsPerPage}
+            tableData={trades}
+          />
+        </div>
       </div>
     </div>
   );

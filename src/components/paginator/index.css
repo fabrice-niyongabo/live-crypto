@@ -8,10 +8,15 @@
 
 .pagination-main-container select {
   display: inline-block;
-  background-color: #fff;
+  background-color: transparent;
   border: 1px solid #ccc;
   padding: 5px 10px;
   outline: none;
+  border-radius: 10px;
+  color: #fff;
+}
+.pagination-main-container select option {
+  color: #000;
 }
 .pagination-main-container a {
   display: block;
@@ -35,19 +40,20 @@
   list-style: none;
   display: inline-block;
   margin: 0px 5px;
-  background-color: #fff;
+  background-color: transparent;
   border: 1px solid #ccc;
   margin-bottom: 5px;
 }
 .pagination-main-container .activeClassName {
-  background-color: rgb(51 65 85 / 1);
+  background-color: #eab308;
   color: white;
+  border: 1px solid #eab308;
 }
 .pagination-main-container .previousClassName {
   list-style: none;
   display: inline-block;
   margin: 0px 5px;
-  background-color: #fff;
+  background-color: #ffffff79;
   border: 1px solid #ccc;
   a {
     text-decoration: none;
