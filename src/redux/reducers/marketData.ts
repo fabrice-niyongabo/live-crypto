@@ -1,4 +1,4 @@
-import { IAction, ITrade } from "../../interfaces";
+import { IAction, ISymbol } from "../../interfaces";
 import {
   ADD_OR_UPDATE_TRADE,
   RESET_TRADES,
@@ -7,7 +7,7 @@ import {
 } from "../actions/marketData";
 
 interface IMarketDataReducer {
-  trades: ITrade[];
+  trades: ISymbol[];
   errorMessage: string;
 }
 
@@ -24,9 +24,9 @@ const marketDataReducer = (
     case SET_TRADES:
       return { ...state, trades: action.payload };
     case ADD_OR_UPDATE_TRADE: {
-      const payload: ITrade = action.payload;
+      const payload: ISymbol = action.payload;
       const index = state.trades.findIndex(
-        (item) => item.symbol_id === payload.symbol_id
+        (item) => item.symbol === payload.symbol
       );
       if (index >= 0) {
         let newTrades = state.trades;

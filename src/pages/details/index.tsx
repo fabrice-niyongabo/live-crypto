@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { setTrades } from "../../redux/actions/marketData";
 import { useNavigate, useParams } from "react-router-dom";
-import { ITrade } from "../../interfaces";
+import { ISymbol } from "../../interfaces";
 import Chart from "./chart";
 
 function Details() {
@@ -12,7 +12,7 @@ function Details() {
 
   const { trades } = useSelector((state: RootState) => state.marketDataReducer);
 
-  const [symboldTrades, setSymbolTrades] = useState<ITrade[]>([]);
+  const [symboldTrades, setSymbolTrades] = useState<ISymbol[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 

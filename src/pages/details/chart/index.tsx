@@ -2,32 +2,19 @@
 import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducers";
+import { useEffect, useState } from "react";
 
 function Chart() {
-  const { trades } = useSelector((state: RootState) => state.marketDataReducer);
   const data = {
     series: [
       {
         name: "BUY",
-        data: [31, 40, 28, 51, 42, 109, 100],
+        data: [17, 20, 5, 32, 4, 52, 41],
       },
       {
         name: "SELL",
         data: [11, 32, 45, 32, 34, 52, 41],
       },
-
-      //   {
-      //     name: "BUY",
-      //     data: trades
-      //       .filter((trade) => trade.taker_side === "BUY")
-      //       .map((item) => item.price),
-      //   },
-      //   {
-      //     name: "SELL",
-      //     data: trades
-      //       .filter((trade) => trade.taker_side === "SELL")
-      //       .map((item) => item.price),
-      //   },
     ],
     options: {
       chart: {
@@ -59,6 +46,13 @@ function Chart() {
       },
     },
   };
+
+  useEffect(() => {
+    const dat = [];
+    for (let i = 0; i < sortedTrades.length; i++) {
+      const exists = dat.find((item) => item === sortedTrades[i].time_exchange);
+    }
+  }, [sortedTrades]);
 
   return (
     <>

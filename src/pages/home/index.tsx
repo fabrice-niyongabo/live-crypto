@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { setTrades } from "../../redux/actions/marketData";
 import { useNavigate } from "react-router-dom";
+import Symbol from "./symbol";
 
 function Home() {
   const dispatch = useDispatch();
@@ -13,13 +14,12 @@ function Home() {
   const fetchData = () => {
     setIsLoading(true);
     axios
-      .get(
-        "https://rest.coinapi.io/v1/trades/latest?apikey=" +
-          process.env.REACT_APP_API_KEY
-      )
+      .get("https://testnet.binancefuture.com/fapi/v1/exchangeInfo")
       .then((res) => {
         setIsLoading(false);
-        dispatch(setTrades(res.data));
+        if (res.data.symbols) {
+          dispatch(setTrades(res.data.symbols));
+        }
       })
       .catch((error) => {
         setIsLoading(false);
@@ -37,42 +37,16 @@ function Home() {
           <thead>
             <tr>
               <th className="text-sm font-semibold text-left p-2">Symbol</th>
-              <th className="text-sm font-semibold text-left p-2">Type</th>
               <th className="text-sm font-semibold text-left p-2">Price</th>
-              <th className="text-sm font-semibold text-left p-2">Size</th>
+              <th className="text-sm font-semibold text-left p-2">MinQty</th>
+              <th className="text-sm font-semibold text-left p-2">MaxQty</th>
+              <th className="text-sm font-semibold text-left p-2">Change</th>
               <th className="text-sm font-semibold text-left p-2">Action</th>
             </tr>
           </thead>
           <tbody>
-            {trades.map((trade) => (
-              <tr>
-                <td className="text-xs border-b border-gray-400 p-3">
-                  {trade.symbol_id}
-                </td>
-                <td
-                  className={`${
-                    trade.taker_side === "BUY"
-                      ? "text-xs border-b border-gray-400 p-3 text-green-500"
-                      : "text-xs border-b border-gray-400 p-3 text-red-500"
-                  }`}
-                >
-                  {trade.taker_side}
-                </td>
-                <td className="text-xs border-b border-gray-400 p-3">
-                  {trade.price}
-                </td>
-                <td className="text-xs border-b border-gray-400 p-3">
-                  {trade.size}
-                </td>
-                <td className="text-xs border-b border-gray-400 p-3">
-                  <button
-                    className="bg-yellow-500 text-white rounded-full px-3 py-2 hover:bg-yellow-600"
-                    onClick={() => navigate("/" + trade.symbol_id)}
-                  >
-                    More...
-                  </button>
-                </td>
-              </tr>
+            {trades.map((symbol) => (
+              <Symbol symbol={symbol} key={symbol.symbol} />
             ))}
           </tbody>
         </table>

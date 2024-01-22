@@ -10,14 +10,28 @@ export type TSide =
   | "SELL_ESTIMATED"
   | "UNKNOWN";
 
-export interface ITrade {
-  type: "trade";
-  symbol_id: string;
-  sequence: number;
-  time_exchange: string;
-  time_coinapi: string;
-  uuid: string;
-  price: number;
-  size: number;
-  taker_side: TSide;
+export interface ISymbol {
+  symbol: string;
+  pair: string;
+  contractType: string;
+  deliveryDate: number;
+  onboardDate: number;
+  status: "TRADING";
+  maintMarginPercent: string;
+  requiredMarginPercent: string;
+  baseAsset: string;
+  quoteAsset: string;
+  marginAsset: string;
+  pricePrecision: number;
+  quantityPrecision: number;
+  baseAssetPrecision: number;
+  quotePrecision: number;
+  underlyingType: string;
+  triggerProtect: string;
+  liquidationFee: string;
+  marketTakeBound: string;
+  maxMoveOrderLimit: number;
+  filters: any[];
+  orderTypes: string[];
+  timeInForce: string[];
 }
